@@ -34,7 +34,7 @@ namespace Chess
 		private Board _board;
 		private readonly List<Piece> pieces;
 		private List<ChessField> _chessFields;
-
+        
 
 
 		public MainWindow()
