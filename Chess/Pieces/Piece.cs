@@ -91,8 +91,35 @@ namespace Chess
 
 		public void Move(PiecePos moveTo)
 		{
-			
-		}
+            List<PiecePos> possibleMoves = PossibleMoves();
+            if (!possibleMoves.Contains(moveTo))
+            {  
+                return;
+            }
+
+            this.MovesCount++;
+
+
+            if (!Board.PiecesOnTheBoard.Contains(this))
+            {  
+                throw new NotImplementedException();
+            }
+
+            Piece thisPiece = Board.PiecesOnTheBoard.FirstOrDefault(p => p.Equals(this));
+
+            if (thisPiece == null)
+            { 
+                throw new NotImplementedException();
+            }
+
+            var otherPieceInField = Board.PiecesOnTheBoard.FirstOrDefault(p => p.Position.Equals(moveTo));
+            if (otherPieceInField != null)
+            {
+                //Capture enemy piece
+                otherPieceInField.IsAlive = false;
+                Board.PiecesOnTheBoard.Remove(otherPieceInField);
+            }
+        }
 		
 		
 
