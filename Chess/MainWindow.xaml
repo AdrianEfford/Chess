@@ -1,0 +1,264 @@
+﻿<Window x:Class="Chess.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chess"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1200">
+	
+	<Window.Resources>
+		<Style x:Key="NumberLabels" TargetType="Label">
+			<Setter Property="FontSize" Value="40"></Setter>
+			<Setter Property="Foreground" Value="Gray"></Setter>
+		</Style>
+		<Style x:Key="LettersLabels" TargetType="Label">
+			<Setter Property="FontSize" Value="40"></Setter>
+			<Setter Property="Foreground" Value="Gray"></Setter>
+		</Style>
+		<Style x:Key="TimeLabel" TargetType="Label">
+			<Setter Property="FontSize" Value="20"></Setter>
+			<Setter Property="Foreground" Value="Gray"></Setter>
+		</Style>
+		<Style x:Key="NormalLabels" TargetType="Label">
+			<Setter Property="FontSize" Value="20"></Setter>
+			<Setter Property="Foreground" Value="#4d4d4d"></Setter>
+			<Setter Property="FontStyle" Value="Italic"></Setter>
+		</Style>
+
+		<Style x:Key="ButtonFocusVisual">
+			<Setter Property="Control.Template">
+				<Setter.Value>
+					<ControlTemplate>
+						<Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<LinearGradientBrush x:Key="ButtonNormalBackground" EndPoint="0,1" StartPoint="0,0">
+			<GradientStop Color="#F3F3F3" Offset="0"/>
+			<GradientStop Color="#EBEBEB" Offset="0.5"/>
+			<GradientStop Color="#DDDDDD" Offset="0.5"/>
+			<GradientStop Color="#CDCDCD" Offset="1"/>
+		</LinearGradientBrush>
+		<SolidColorBrush x:Key="ButtonNormalBorder" Color="#FF707070"/>
+		<Style x:Key="ToggleButtonStyle1" TargetType="{x:Type ToggleButton}">
+			<Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
+			<Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
+			<Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorder}"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
+			<Setter Property="Padding" Value="1"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type ToggleButton}">
+						<StackPanel Orientation="Horizontal">
+							<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+							<Border x:Name="on" Width="50" Height="40" Background="LightGray" CornerRadius="2,0,0,4" Margin="10,0,0,0">
+								<TextBlock x:Name="onText" Text="On" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+							</Border>
+							<Border x:Name="off" Width="50" Height="40" Background="LightGray" CornerRadius="0,2,4,0">
+								<TextBlock x:Name="offText" Text="Off" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+							</Border>
+						</StackPanel>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsEnabled" Value="false">
+								<Setter Property="Foreground" Value="#ADADAD"/>
+							</Trigger>
+							<Trigger Property="IsChecked" Value="true">
+								<Setter TargetName="on" Property="Background" Value="Green"/>
+								<Setter TargetName="onText" Property="Foreground" Value="White"/>
+							</Trigger>
+							<Trigger Property="IsChecked" Value="False">
+								<Setter TargetName="off" Property="Background" Value="Red"/>
+								<Setter TargetName="offText" Property="Foreground" Value="White"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Resources>
+
+	<Grid ShowGridLines="False">
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="0.12*"></ColumnDefinition>
+			<ColumnDefinition Width="1.8*"></ColumnDefinition>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="0.13*"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="0.12*"></RowDefinition>
+		</Grid.RowDefinitions>
+
+		<!--Board UC
+		<DockPanel Grid.Row="1" Grid.Column="1" Name="UC_Board" DockPanel.Dock="Left" Height="Auto" LastChildFill="True"/>-->
+
+		<!--Board grid-->
+		<Grid Name="BoardGrid" ShowGridLines="False" Row="1" Column="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+
+
+
+
+		</Grid>
+
+		<!--Numbers grid-->
+		<Grid Grid.Row="1" Grid.Column="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="0.2*"></ColumnDefinition> <!--Margin-->
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="0.2*"></ColumnDefinition>
+				<!--Margin-->
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+
+			<Label Style="{StaticResource NumberLabels}" Grid.Row="7" Grid.Column="1" Content="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource NumberLabels}" Grid.Row="6" Grid.Column="1" Content="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource NumberLabels}" Grid.Row="5" Grid.Column="1" Content="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource NumberLabels}" Grid.Row="4" Grid.Column="1" Content="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource NumberLabels}" Grid.Row="3" Grid.Column="1" Content="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource NumberLabels}" Grid.Row="2" Grid.Column="1" Content="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource NumberLabels}" Grid.Row="1" Grid.Column="1" Content="7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource NumberLabels}" Grid.Row="0" Grid.Column="1" Content="8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+		</Grid>
+		
+		<!--Letters grid-->
+		<Grid Grid.Row="2" Grid.Column="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="0"></RowDefinition> <!--Margin-->
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="0.12*"></RowDefinition> <!--Margin-->
+			</Grid.RowDefinitions>
+
+			<Label Style="{StaticResource LettersLabels}" Grid.Row="1" Grid.Column="0" Content="A" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource LettersLabels}" Grid.Row="1" Grid.Column="1" Content="B" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource LettersLabels}" Grid.Row="1" Grid.Column="2" Content="C" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource LettersLabels}" Grid.Row="1" Grid.Column="3" Content="D" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource LettersLabels}" Grid.Row="1" Grid.Column="4" Content="E" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource LettersLabels}" Grid.Row="1" Grid.Column="5" Content="F" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource LettersLabels}" Grid.Row="1" Grid.Column="6" Content="G" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Label Style="{StaticResource LettersLabels}" Grid.Row="1" Grid.Column="7" Content="H" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+		</Grid>
+		
+		<!--Title grid-->
+		<Grid Grid.Row="0" Grid.Column="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" ></ColumnDefinition>
+				<ColumnDefinition Width="1.5*" ></ColumnDefinition>
+				<ColumnDefinition Width="*" ></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="0.1*"></RowDefinition> <!--Margin-->
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="0.15*"></RowDefinition> <!--Margin-->
+			</Grid.RowDefinitions>
+
+
+		</Grid>
+		
+		<!--Time grid-->
+		<Grid Grid.Row="0" Grid.Column="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1.2*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="0.12*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="0.15*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="0.15*"></RowDefinition>
+			</Grid.RowDefinitions>
+
+			<Image Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,15,15,15"  VerticalAlignment="Center" Source="Resources/clock.png"/>
+			<Label Grid.Row="1" Grid.Column="1" Style="{StaticResource TimeLabel}" Content="{Binding TimeString}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+			
+		</Grid>
+
+		<!--Settings/Info Grid-->
+		<Grid Margin="20,0,0,0" Grid.Row="1" Grid.Column="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="3*"></RowDefinition>
+				
+			</Grid.RowDefinitions>
+
+			<!--Turn Grid-->
+			<Grid Grid.Row="0" Grid.Column="0" >
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+				</Grid.ColumnDefinitions>
+				<Image Grid.Row="0" Grid.Column="1" Margin="20,25,0,25" HorizontalAlignment="Left" VerticalAlignment="Stretch" Source="{Binding TurnImage}" />
+			</Grid>
+
+
+			<!--Piece Helper grid-->
+			<Grid Grid.Row="1" Grid.Column="0" >
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+				</Grid.ColumnDefinitions>
+			</Grid>
+
+		</Grid>
+
+		
+
+
+
+
+
+
+	</Grid>
+</Window>
+
