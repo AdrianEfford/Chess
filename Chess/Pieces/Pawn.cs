@@ -8,8 +8,8 @@ using System.Windows.Media.Imaging;
 namespace Chess
 {
 	public class Pawn
-	{ 
-
+	{
+        int a = 0;
 	
 	}
 }
