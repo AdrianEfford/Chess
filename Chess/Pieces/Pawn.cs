@@ -9,7 +9,6 @@ namespace Chess
 {
 	public class Pawn
 	{
-        
-	
+        	
 	}
 }

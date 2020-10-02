@@ -2,8 +2,8 @@
 
 namespace Chess
 {
-	public class Rook
-	{ 
-		
-	}
+    public class Rook
+    {
+        
+    }
 }

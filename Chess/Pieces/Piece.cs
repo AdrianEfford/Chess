@@ -14,7 +14,7 @@ namespace Chess
 
 		public delegate void PassPiece(Piece piece);
 		public static event PassPiece PieceDie;
-		public static event PassPiece ConvertPawn; //When pawn reaches the last row
+		public static event PassPiece ConvertPawn; //When pawn reaches the last row        
 
 		private bool isAlive;
 		public bool IsAlive
@@ -39,7 +39,8 @@ namespace Chess
 			this.IsAlive = true;
 			this.Value = value;
 		}
-		
+
+	
 		public abstract List<PiecePos> PossibleMoves();
 
 		public virtual ImageSource GetImage()
@@ -70,7 +71,8 @@ namespace Chess
 			}
 			catch (Exception e)
 			{
-				//TODO LOG
+                //TODO LOG
+                throw e;
 			}
 
 			return Helper.EmptyImage;
