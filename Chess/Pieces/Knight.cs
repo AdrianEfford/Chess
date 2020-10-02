@@ -26,7 +26,7 @@ namespace Chess
 
         public override List<PiecePos> PossibleMoves()
         {
-            return OffsetMovementHandle(KnightOffsets, true);
+            return OffsetMovementHandle(KnightOffsets);
         }
 
     }

@@ -18,13 +18,28 @@ namespace Chess.Usercontrols.ClassicChess
 		{
 			Model.MainWindowViewModel.TurnColor = EPieceColor.White; //set who is going to start
 
-			Pieces = new List<Piece>()
-			{
+            Pieces = new List<Piece>()
+            {
+				
 
 			
+                new Knight(EPieceColor.White, new PiecePos(2,1), _knightValue),
+            
+                new King(EPieceColor.White, new PiecePos(5,1), _kingValue),
+              
+                new Knight(EPieceColor.White, new PiecePos(7,1), _knightValue),
+
+
+
 				
-			};
-		}
+                new Knight(EPieceColor.Black, new PiecePos(2,8), _knightValue),
+                
+                new King(EPieceColor.Black, new PiecePos(5,8), _kingValue),
+              
+                new Knight(EPieceColor.Black, new PiecePos(7,8), _knightValue),
+
+            };
+        }
 			
 	}
 }

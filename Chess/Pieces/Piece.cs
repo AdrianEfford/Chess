@@ -122,10 +122,71 @@ namespace Chess
                 Board.PiecesOnTheBoard.Remove(otherPieceInField);
             }
         }
-		
-		
+
+        /// <summary>
+		/// Pieces which move using a pattern (offsets) should use this method
+		/// </summary>
+		/// <param name="offsetList"></param>
+		/// <param name="canJump"></param>
+		/// <returns></returns>
+		public List<PiecePos> OffsetMovementHandle(List<Tuple<int, int>> offsetList)
+        {
+            /*AXIOM: The pieces that are not allowed to jump will never take a diagonal as alternative route to reach the endField. They are always taking the straight way.
+			 *		 The way could be eighter vertical first and then horizontal or otherwise !!
+			 *
+			 * EXAMPLE:
+			 *
+			 * Knight (In this example the piece CAN'T jump) is at B1
+			 * It should reach A3 or C3
+			 * The path to reach those fields would be:
+			 *		B1 --> B2 --> B3 ---> A3//C3
+			 *				OR
+			 *		B1 --> A1 --> A2 --> A3
+			 *		B1 --> C1 --> C2 --> C3
+			 *
+			 *
+			 * In case the AXIOM is not guaranteed the path would be: (NOT VALID!!!)
+			 *		B1 --> A2 --> A3 // B1 --> B2 --> A3 // B1 --> B2 --> B3 --> A3
+			 *		B1 --> C2 --> C3 // B1 --> B2 --> C3 // B1 --> B2 --> B3 --> C3
+			 *
+			 */
+
+
+            List<PiecePos> allMoves = new List<PiecePos>();
+            foreach (var offset in offsetList)
+            {
+                PiecePos moveToField = new PiecePos(this.Position.X + offset.Item1, this.Position.Y + offset.Item2);
+
+                if (moveToField.X > Helper.BoardSize || moveToField.X < 1 || moveToField.Y > Helper.BoardSize || moveToField.Y < 1)
+                {
+                    //Invalid field (out of bounds)
+                    continue;
+                }
+
+                allMoves.Add(moveToField);
+            }
+
+            foreach (var movement in new List<PiecePos>(allMoves))
+            {
+                //If the color of the pieces is different, the otherPieceInField result will be null and the field will be validated
+                var otherPieceInField = Board.PiecesOnTheBoard
+                    .FirstOrDefault(p => p.IsAlive && p.Position.Equals(movement) && p.Color == this.Color);
+
+                if (otherPieceInField != null)
+                {
+                    allMoves.Remove(movement); //The piece at the reachable field is from the same color than this piece --> Can't overload = Can't recah
+                }
+            }
+
+        
+
+
+            return allMoves;
+        }
 
 
 
-	}
+
+
+    }
 }
